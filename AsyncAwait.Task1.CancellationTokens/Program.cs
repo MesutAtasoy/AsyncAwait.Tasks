@@ -51,7 +51,7 @@ internal class Program
         Console.ReadLine();
     }
 
-    private static void CalculateSum(int n)
+    private static async Task CalculateSum(int n)
     {
         /// If there is a task trying to calculate beforehand, it cancels it first.
         /// Then the source is resetted for next calculations
@@ -59,23 +59,19 @@ internal class Program
         _tokenSource = new CancellationTokenSource();
 
         /// Task.Run() is used to avoid blocking the main thread
-        Task.Run(() =>
+        Console.WriteLine($"The task for {n} started... Enter N to cancel the request:");
+
+        try
         {
-            Console.WriteLine($"The task for {n} started... Enter N to cancel the request:");
+            var sum = await Calculator.CalculateAsync(n, _tokenSource.Token);
+            Console.WriteLine($"Sum for {n} = {sum}.");
+            Console.WriteLine();
+            Console.WriteLine("Enter N: ");
+        }
+        catch (Exception)
+        {
+            Console.WriteLine($"Sum for {n} cancelled...");
 
-            var sum = Calculator.CalculateAsync(n, _tokenSource.Token);
-            
-            try
-            {
-                Console.WriteLine($"Sum for {n} = {sum.Result}.");
-                Console.WriteLine();
-                Console.WriteLine("Enter N: ");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine($"Sum for {n} cancelled...");
-
-            }
-        });
+        }
     }
 }
