@@ -58,9 +58,7 @@ internal class Program
         _tokenSource.Cancel(); 
         _tokenSource = new CancellationTokenSource();
 
-        /// Task.Run() is used to avoid blocking the main thread
-        Console.WriteLine($"The task for {n} started... Enter N to cancel the request:");
-
+        Console.WriteLine($"The task for {n} started... Enter Nto cancel the request:");
         try
         {
             var sum = await Calculator.CalculateAsync(n, _tokenSource.Token);
