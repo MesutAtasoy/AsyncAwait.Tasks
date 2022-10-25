@@ -36,10 +36,11 @@ internal static class Calculator
 
             for (var i = 0; i < n; i++)
             {
-                token.ThrowIfCancellationRequested(); 
+                if(token.IsCancellationRequested)
+                    token.ThrowIfCancellationRequested();
+
                 sum = sum + (i + 1);
                 Thread.Sleep(10);
-                Console.WriteLine($"Calculating now... The sum is {sum}");
             }
 
             return sum;

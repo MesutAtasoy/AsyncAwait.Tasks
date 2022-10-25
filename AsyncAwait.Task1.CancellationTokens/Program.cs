@@ -58,7 +58,7 @@ internal class Program
         _tokenSource.Cancel(); 
         _tokenSource = new CancellationTokenSource();
 
-        Console.WriteLine($"The task for {n} started... Enter Nto cancel the request:");
+        Console.WriteLine($"The task for {n} started... Enter N to cancel the request:");
         try
         {
             var sum = await Calculator.CalculateAsync(n, _tokenSource.Token);
@@ -66,10 +66,9 @@ internal class Program
             Console.WriteLine();
             Console.WriteLine("Enter N: ");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine($"Sum for {n} cancelled...");
-
+            Console.WriteLine($"{ex?.Message} -- Sum for {n} cancelled...");
         }
     }
 }
